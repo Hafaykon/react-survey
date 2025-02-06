@@ -16,5 +16,9 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "eslint.rules.customizations": [
+      { "rule": "*", "severity": "warn" },
+    ],
+    "workbench.colorCustomizations": { "editorWarning.foreground": "#00FF00" }
   },
 }
