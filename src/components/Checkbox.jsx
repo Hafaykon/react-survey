@@ -1,39 +1,39 @@
 import "../App.css";
 
 const CheckBox = (props) => {
-
-
     return(
         <>
             <ul>
                 <li>
                     <label
                     ><input
-                        name="spend-time"
+                        name="spendTime"
                         type="checkbox"
-                        value="swimming"
+                        value="Swimming"
                         onChange={props.handleChange}
+                        checked={props.surveyData.spendTime.includes("Swimming")}
                     />Swimming</label
                     >
                 </li>
                 <li>
                     <label
-                    ><input name="spend-time" type="checkbox" value="bathing" onChange={props.handleChange} checked={props.surveyData.spendTime.add(value)}/>Bathing</label
+                    ><input name="spendTime" type="checkbox" value="Bathing" onChange={props.handleChange} checked={props.surveyData.spendTime.includes("Bathing")}/>Bathing</label
                     >
                 </li>
                 <li>
                     <label
                     ><input
-                        name="spend-time"
+                        name="spendTime"
                         type="checkbox"
-                        value="chatting"
-                        onChange={props.handleChange}
+                        value="Chatting"
+                        onChange={props.handleChange} 
+                        checked={props.surveyData.spendTime.includes("Chatting")}
                     />Chatting</label
                     >
                 </li>
                 <li>
                     <label
-                    ><input name="spend-time" type="checkbox" value="noTime" onChange={props.handleChange}/>I don't like to
+                    ><input name="spendTime" type="checkbox" value="noTime" onChange={props.handleChange} checked={props.surveyData.spendTime.includes("noTime")}/>I don't like to
                     spend time with it</label
                     >
                 </li>

@@ -19,7 +19,7 @@ function Survey() {
     }
   ])
 
-  const [surveyData, setSurveyData] = useState([
+  const [surveyData, setSurveyData] = useState(
     {
       username: "",
       email: "",
@@ -27,19 +27,33 @@ function Survey() {
       review: "",
       colourRating: ""
     }
-  ]);
+  );
 
-    
   const handleChange = (event) => {
-    const { name, value, type } = event.target;
+    const { name, value, type, checked } = event.target;
 
     if (type === "checkbox") {
-      setSurveyData({ ...surveyData, [event.target.name]: event.target.checked });
+        setSurveyData((prevData) => {
+            let updatedSpendTime = prevData.spendTime || [];
+            if (checked) {
+                if (!updatedSpendTime.includes(value)) {
+                    updatedSpendTime = [...updatedSpendTime, value];
+                }
+            } else {
+                updatedSpendTime = updatedSpendTime.filter((item) => item !== value);
+            }
+            return {
+                ...prevData,
+                spendTime: updatedSpendTime,
+            };
+        });
     } else {
-      setSurveyData({ ...surveyData, [event.target.name]: event.target.value });
+        setSurveyData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
     }
-    console.log({...surveyData})
-  }
+};
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -50,7 +64,7 @@ function Survey() {
         id: Math.max(...dataBase.map((dataBase) => dataBase.id)) + 1,
         username: surveyData.username,
         email: surveyData.email,
-
+        spendTime: surveyData.spendTime,
         review: surveyData.review,
         colourRating: surveyData.colourRating,
       },
@@ -66,7 +80,6 @@ function Survey() {
     console.log({...dataBase})
   };
 
-//<CheckBox handleChange={handleChange} surveyData={surveyData}/> 
   return (
     <main className="survey">
       <section className={`survey__list ${open ? "open" : ""}`}>
@@ -79,6 +92,8 @@ function Survey() {
                         <li>&emsp;{dbEntry.username}</li>
                         <p>E-mail</p>
                         <li>&emsp;{dbEntry.email}</li>
+                        <p>How do you like to spend time with your duck?</p>
+                        <li>&emsp;{dbEntry.spendTime.join(", ") || " "}</li>
                         <p>Anything else you'd like to say about your duck?</p>
                         <li>&emsp;{dbEntry.review}</li>
                         <p>How do you rate the colur of your duck?</p>
@@ -96,7 +111,7 @@ function Survey() {
             </div>
             <div className="form__group">
               <h3>How do you like to spend time with your rubber duck</h3>
-                   
+              <CheckBox handleChange={handleChange} surveyData={surveyData}/> 
             </div>
             <label
               >What else have you got to say about your rubber duck?<textarea
